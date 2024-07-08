@@ -26,4 +26,16 @@ public class Tests
         Assert.AreEqual(0.6, licence.PricePerGame);
         Assert.AreEqual(false, licence.FirstFilmFree);
     }
+
+    [Test]
+    public void TestAddItemToLibrary()
+    {
+        var library = new library(DateTime.Now);
+        book book1 = new book("bijbel", "godsdienst", "vele mensen", "nederlands");
+
+        Assert.AreEqual(library.books.Count,0);
+        library.addItem(book1);
+        Assert.AreEqual(library.books.Count,1);
+        Assert.AreEqual(library.books[0],book1);
+    }
 }
