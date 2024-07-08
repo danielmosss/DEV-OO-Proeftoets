@@ -38,4 +38,18 @@ public class Tests
         Assert.AreEqual(library.books.Count,1);
         Assert.AreEqual(library.books[0],book1);
     }
+
+    [Test]
+    public void TestAddItemToUser()
+    {
+        var licence = new beginner(DateTime.Now);
+        var user = new user("daniël", 20, licence);
+
+        book dagboek = new book("dagboek", "zelf-ontwikkeling", "elise", "nederlands");
+
+        Assert.AreEqual(user.getItems().Count, 0);
+        user.addItem(dagboek);
+        Assert.AreEqual(user.getItems().Count, 1);
+        Assert.AreEqual(user.getItems()[0], dagboek);
+    }
 }

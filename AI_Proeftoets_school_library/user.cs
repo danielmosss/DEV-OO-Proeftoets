@@ -57,6 +57,11 @@ public class user
         items.AddRange(games);
         return items;
     }
+
+    public List<book> getBooks()
+    {
+        return bookiess;
+    }
     
     public double GetBalance()
     {
