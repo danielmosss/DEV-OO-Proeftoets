@@ -92,7 +92,7 @@ void PrintMenu()
                 HandleNextDay();
                 break;
             
-                
+            PrintMenu();
         }
     }
 }
