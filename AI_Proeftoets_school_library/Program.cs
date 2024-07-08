@@ -86,14 +86,21 @@ void PrintMenu()
                 break;
             case 7:
                 ActiveUser = null;
+                // update user in library otherwise all changes will be lost
+                
                 PrintMenu();
                 break;
             case 8:
                 HandleNextDay();
                 break;
-            
-            PrintMenu();
+            case 9:
+                AddBalance();
+                break;
+            default:
+                Console.WriteLine("Ongeldige invoer.");
+                break;
         }
+        PrintMenu();
     }
 }
 
@@ -149,4 +156,42 @@ user CreateUser()
 
     var user = new user(name, 50, licence);
     return user;
+}
+
+void AddItemLibrary()
+{
+    
+}
+
+void RemoveItemLibrary()
+{
+    
+}
+
+void ShowItems()
+{
+    
+}
+
+void LeenItem()
+{
+    
+}
+
+void BrengItemTerug()
+{
+    
+}
+
+void HandleNextDay()
+{
+    
+}
+
+void AddBalance()
+{
+    Console.WriteLine("Hoeveel wil je toevoegen?");
+    var input = double.Parse(Console.ReadLine());
+    ActiveUser.AddBalance(input);
+    Console.WriteLine($"{ActiveUser.GetBalance()} is nu je nieuwe balance.");
 }
