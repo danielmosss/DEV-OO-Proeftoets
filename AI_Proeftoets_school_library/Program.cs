@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using AI_Proeftoets_school_library;
+﻿using AI_Proeftoets_school_library;
 
 Console.WriteLine("Hello, World!");
 
@@ -42,23 +40,16 @@ void PrintMenu()
     }
     else
     {
-        // - toevoegen van items (film,boek,game(name, genre, author, language))
         Console.WriteLine("1. Voeg een item toe.");
-        // - verwijderen van items (film,boek,game)
         Console.WriteLine("2. Verwijder een item.");
-        // - bekijken van items (film,boek,game)
         Console.WriteLine("3. Bekijk items.");
-        // - bekijken van gebruiker, huidige
         Console.WriteLine("4. Bekijk gebruiker.");
-        // - item lenen (max 21 dagen, + check licentie)
         Console.WriteLine("5. Leen een item.");
-        // - item terugbrengen
         Console.WriteLine("6. Breng een item terug.");
-        // - gebruiker wisselen
         Console.WriteLine("7. Wissel van gebruiker.");
-        // - naar de volgende dag gaan
         Console.WriteLine("8. Ga naar de volgende dag.");
         Console.WriteLine("9. Voeg balans toe.");
+        Console.WriteLine("10. Bekijk alle items van gebruiker.");
         Console.WriteLine("Kies een optie.");
         
         var input = int.Parse(Console.ReadLine());
@@ -77,6 +68,7 @@ void PrintMenu()
                 Console.WriteLine("Gebruiker: " + ActiveUser.name);
                 Console.WriteLine("Licentie: " + ActiveUser.licence.name);
                 Console.WriteLine("Balans: " + ActiveUser.GetBalance());
+                PrintMenu();
                 break;
             case 5:
                 LeenItem();
@@ -96,11 +88,14 @@ void PrintMenu()
             case 9:
                 AddBalance();
                 break;
+            case 10:
+                ViewAllItemsOfUser();
+                break;
             default:
                 Console.WriteLine("Ongeldige invoer.");
+                PrintMenu();
                 break;
         }
-        PrintMenu();
     }
 }
 
@@ -134,6 +129,13 @@ void PrintUsers()
                 Console.WriteLine("Gebruiker niet gevonden.");
             }
         }
+        PrintMenu();
+    }
+    else
+    {
+        var user = CreateUser();
+        ActiveUser = user;
+        PrintMenu();
     }
 }
 
@@ -155,37 +157,166 @@ user CreateUser()
     var licence = BierBib.licences[int.Parse(Console.ReadLine())];
 
     var user = new user(name, 50, licence);
+    BierBib.addUser(user);
     return user;
 }
 
 void AddItemLibrary()
 {
+    Console.WriteLine("1. Boek");
+    Console.WriteLine("2. Film");
+    Console.WriteLine("3. Game");
+    Console.WriteLine("Kies een optie.");
+    var input = int.Parse(Console.ReadLine());
     
+    Console.WriteLine("Naam:");
+    var name = Console.ReadLine();
+    
+    Console.WriteLine("Genre:");
+    var genre = Console.ReadLine();
+    
+    Console.WriteLine("Auteur:");
+    var author = Console.ReadLine();
+    
+    Console.WriteLine("Taal:");
+    var language = Console.ReadLine();
+    
+    switch (input)
+    {
+        case 1:
+            BierBib.addItem(new book(name, genre, author, language));
+            break;
+        case 2:
+            BierBib.addItem(new film(name, genre, author, language));
+            break;
+        case 3:
+            BierBib.addItem(new game(name, genre, author, language));
+            break;
+        default:
+            Console.WriteLine("Ongeldige invoer.");
+            break;
+    }
+    PrintMenu();
 }
 
 void RemoveItemLibrary()
 {
-    
+    Console.WriteLine("1. Boek");
+    Console.WriteLine("2. Film");
+    Console.WriteLine("3. Game");
+    Console.WriteLine("Kies een optie.");
+    var input = int.Parse(Console.ReadLine());
+
+    for (int i = 0; i < BierBib.books.Count; i++)
+    {
+        Console.WriteLine(i + ". " + BierBib.books[i].name);
+    }
+    Console.WriteLine("Kies een item, type het nummer.");
+    var item = BierBib.books[int.Parse(Console.ReadLine())];
+    BierBib.removeItem(item);
+    Console.WriteLine("Item verwijderd.");
+    PrintMenu();
 }
 
 void ShowItems()
 {
+    Console.WriteLine("1. Boek");
+    Console.WriteLine("2. Film");
+    Console.WriteLine("3. Game");
+    Console.WriteLine("Kies een optie.");
+    var input = int.Parse(Console.ReadLine());
     
+    switch (input)
+    {
+        case 1:
+            foreach (var book in BierBib.books)
+            {
+                Console.WriteLine(book.name);
+            }
+            break;
+        case 2:
+            foreach (var film in BierBib.films)
+            {
+                Console.WriteLine(film.name);
+            }
+            break;
+        case 3:
+            foreach (var game in BierBib.games)
+            {
+                Console.WriteLine(game.name);
+            }
+            break;
+        default:
+            Console.WriteLine("Ongeldige invoer.");
+            break;
+    }
+    PrintMenu();
 }
 
 void LeenItem()
 {
+    Console.WriteLine("1. Boek");
+    Console.WriteLine("2. Film");
+    Console.WriteLine("3. Game");
+    Console.WriteLine("Kies een optie.");
+    var input = int.Parse(Console.ReadLine());
     
+    Item item = null;
+    switch (input)
+    {
+        case 1:
+            for (int i = 0; i < BierBib.books.Count; i++)
+            {
+                Console.WriteLine(i + ". " + BierBib.books[i].name);
+            }
+            Console.WriteLine("Kies een item, type het nummer.");
+            item = BierBib.books[int.Parse(Console.ReadLine())];
+            break;
+        case 2:
+            for (int i = 0; i < BierBib.films.Count; i++)
+            {
+                Console.WriteLine(i + ". " + BierBib.films[i].name);
+            }
+            Console.WriteLine("Kies een item, type het nummer.");
+            item = BierBib.films[int.Parse(Console.ReadLine())];
+            break;
+        case 3:
+            for (int i = 0; i < BierBib.games.Count; i++)
+            {
+                Console.WriteLine(i + ". " + BierBib.games[i].name);
+            }
+            Console.WriteLine("Kies een item, type het nummer.");
+            item = BierBib.games[int.Parse(Console.ReadLine())];
+            break;
+        default:
+            Console.WriteLine("Ongeldige invoer.");
+            break;
+    }
+    
+    ActiveUser.addItem(item);
+    BierBib.removeItem(item);
+    Console.WriteLine("Item toegevoegd.");
+    PrintMenu();
+}
+
+void ViewAllItemsOfUser()
+{
+    var items = ActiveUser.getItems();
+    foreach (var item in items)
+    {
+        Console.WriteLine(item.name);
+    }
+    PrintMenu();
 }
 
 void BrengItemTerug()
 {
-    
+    PrintMenu();
 }
 
 void HandleNextDay()
 {
-    
+    PrintMenu();
 }
 
 void AddBalance()
@@ -194,4 +325,5 @@ void AddBalance()
     var input = double.Parse(Console.ReadLine());
     ActiveUser.AddBalance(input);
     Console.WriteLine($"{ActiveUser.GetBalance()} is nu je nieuwe balance.");
+        PrintMenu();
 }

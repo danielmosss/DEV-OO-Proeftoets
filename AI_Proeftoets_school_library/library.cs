@@ -76,4 +76,9 @@ public class library
         }
         return users[index];
     }
+    
+    public void addUser(user user)
+    {
+        users.Add(user);
+    }
 }
